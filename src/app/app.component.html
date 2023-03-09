@@ -1,19 +1,28 @@
 <h2> To Do List</h2>
 
-<form *ngFor="let task of todo">
- 
-  <ul>
-    <li>{{task.task}}</li>
-    <!--add button here?-->
-    <br>
-  </ul>
+<div *ngFor="let todo of todo;index as i">
+
+  <p [ngClass]="todo.completed ? 'completedTask':''">Task {{ todo.task }} <button (click)="DeleteToDo(i)">X</button></p>
+  <p>Completed {{ todo.completed }}</p>
+  <input *ngIf="todo.isEditing" type="text" id="EditTask" [(ngModel)]="todo.task"/>
+  <button *ngIf="!todo.isEditing" (click)="EditToDo(i)">Edit</button>
+  <button *ngIf="todo.isEditing" (click)="EditToDo(i)">Done Editing!</button>
+
+  <button (click)="CompleteTodo(i)" *ngIf="!todo.completed">Complete</button>
+</div>
+
+
+
+<form  #userForm = "ngForm">
+  <div class="addTask">
+    <label>Enter a new task : </label> <br>
+    <input name="newtask" type = "text"  size="42" placeholder="Add your to-do" 
+    [(ngModel)]="inputModel"  />
+  </div> 
+  <br>
 
 </form>
 
+<button type="submit" id="addButton" (click)="addTodo()" >Add</button>
 
-<form>
-  <label> Add A Task: </label>
-  <!-- <input name="task" type="text" [(ngModel)]="todo.task" /> -->
-
-</form>
-
+</div>

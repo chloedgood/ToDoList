@@ -11,57 +11,59 @@ export class AppComponent {
   todolist: Todo[] = [];
   completedTodos: Todo[] = [];
 
+
   todo : Todo [] = [
     {
       task: 'Fold Laundry',
       completed: false,
+      isEditing:false,
     },
     {
       task: 'Wash Dishes',
       completed: true,
+      isEditing:false,
     },
     {
       task: 'Mop Floors',
       completed: false,
+      isEditing:false,
     },
     {
       task: 'Water Plants',
       completed: true,
+      isEditing:false,
     },
   ];
 
+
  // add to list function
  addTodo(todo:Todo):void {
-  this.todolist = [...this.todolist, todo];
+  let taskName: string = (<HTMLInputElement> document.getElementById("AddInput")).value;
+
+    let t : Todo = {task:taskName, completed:false, isEditing:false};
+
+    this.todo.push(t);
  }
 
- //remove from list function
- removeTodo(todoIn: string): void {
-  console.log('removeTodo: ' + todoIn);
-  let index = 0;
 
-this.todolist.map((todo, i) => {
-if (todo.task === todoIn) {
-  index = i;
+ //remove from list function
+ //the second part of the splice is how many spaces forward to go
+ removeTodo(i:number) {
+this.todo.splice(i, 1);
 }
-return index;
-});
-this.todolist.splice(index, 1);
-}
+
 
 //change completed value to true
-completeTodo(todo: string, i: number): void {
-  let tempTodo = {
-    task: todo,
-    completed: true,
+completeTodo(i:number){
+ this.todo[i].completed=true;
   };
 
- console.log(this.todolist[i]);
 
-this.todolist[i].completed = !this.todolist[i].completed;
 
-this.completedTodos = [...this.completedTodos, tempTodo];
-}
-
+EditToDo(i: number){
+   let t: Todo = this.todo[i];
+  //This is what's a called toggle in front end 
+    t.isEditing = !t.isEditing;
+  }
 
 }
